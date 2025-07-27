@@ -9,8 +9,8 @@ spring:
     port: 5672
     username: guest
     password: guest
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
   h2:
     console:
       enabled: true
