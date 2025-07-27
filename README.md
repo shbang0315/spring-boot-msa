@@ -27,3 +27,5 @@
     * ch08-3: apigateway-service 수정
     * ch08-4: profiles 
     * ch08-5: remote git repository
+  * Section 9)
+    * ch09-1: spring cloud bus (with rabbitmq)
