@@ -29,3 +29,6 @@
     * ch08-5: remote git repository
   * Section 9)
     * ch09-1: spring cloud bus (with rabbitmq)
+  * Section 10)
+    * ch10-1: symmetric encryption
+    * ch10-2: asymmetric encryption
