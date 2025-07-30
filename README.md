@@ -32,3 +32,9 @@
   * Section 10)
     * ch10-1: symmetric encryption
     * ch10-2: asymmetric encryption
+  * Section 11)
+    * ch11-1: usage a resttemplate
+    * ch11-2: usage a loadbalancer
+    * ch11-3: openfeign
+    * ch11-4: apply to a logger level
+    * ch11-5: apply to a feign exception and error decoder
