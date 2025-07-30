@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-        /* usgin a resttemplate */
+        /* using a resttemplate */
 //        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
 //        ResponseEntity<List<ResponseOrder>> orderListResponse =
 //                restTemplate.exchange(orderUrl, HttpMethod.GET, null,
@@ -93,13 +93,16 @@ public class UserServiceImpl implements UserService {
 //                });
 //        List<ResponseOrder> orderList = orderListResponse.getBody();
 
-        List<ResponseOrder> orderList = null;
-        try {
-            orderList = orderServiceClient.getOrders(userId);
-        } catch (FeignException ex) {
-            log.error(ex.getMessage());
-        }
+        /* using a feignclient with logger */
+//        List<ResponseOrder> orderList = null;
+//        try {
+//            orderList = orderServiceClient.getOrders(userId);
+//        } catch (FeignException ex) {
+//            log.error(ex.getMessage());
+//        }
 
+        /* using a feignclient with errordecoder */
+        List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
         userDto.setOrders(orderList);
 
         return userDto;
