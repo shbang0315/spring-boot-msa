@@ -4,11 +4,6 @@ server:
 spring:
   application:
     name: user-service
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
 #  profiles:
 #    active: dev
   h2:
@@ -38,6 +33,7 @@ logging:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
@@ -47,9 +43,9 @@ eureka:
 greeting:
   message: Welcome to the Simple E-commerce. (spring boot)
 
-#token:
-#  expiration-time: 86400000 #10 days
-#  secret: my-very-long-secret-key-1234567890123456
+token:
+  expiration-time: 86400000 #10 days
+  secret: my-very-long-secret-key-1234567890123456
 
 management:
   endpoints:

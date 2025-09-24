@@ -3,6 +3,7 @@ package com.example.apigatewayservice.filter;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -67,18 +68,23 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     private boolean isJwtValid(String jwt) {
-        byte[] secretKeyBytes = env.getProperty("token.secret").getBytes();
-        SecretKey signingKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
+        // 1. application.yml에서 비밀키 가져오기
+        String secret = env.getProperty("token.secret");
+        // 2. 비밀키를 UTF-8 바이트로 변환 (user-service와 동일 방식)
+        byte[] secretKeyBytes = secret.getBytes(StandardCharsets.UTF_8);
+        // 3. SecretKey 객체 생성 (user-service와 동일 방식)
+        SecretKey secretKey = Keys.hmacShaKeyFor(secretKeyBytes);
 
         boolean returnValue = true;
         String subject = null;
 
         try {
+            // 4. 최신 스타일의 JwtParser로 토큰 검증
             JwtParser jwtParser = Jwts.parser()
-                    .setSigningKey(signingKey)
+                    .verifyWith(secretKey) // setSigningKey() 대신 verifyWith() 사용
                     .build();
 
-            subject = jwtParser.parseClaimsJws(jwt).getBody().getSubject();
+            subject = jwtParser.parseSignedClaims(jwt).getPayload().getSubject();
         } catch (Exception ex) {
             returnValue = false;
         }

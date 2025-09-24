@@ -63,17 +63,21 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         String userName = ((User) authResult.getPrincipal()).getUsername();
         UserDto userDetails = userService.getUserDetailsByEmail(userName);
 
-        byte[] secretKeyBytes = environment.getProperty("token.secret").getBytes(StandardCharsets.UTF_8);
-
+        // 1. application.yml에서 비밀키 가져오기
+        String secret = environment.getProperty("token.secret");
+        // 2. 비밀키를 UTF-8 바이트로 변환 (게이트웨이와 동일 방식)
+        byte[] secretKeyBytes = secret.getBytes(StandardCharsets.UTF_8);
+        // 3. SecretKey 객체 생성 (게이트웨이와 동일 방식)
         SecretKey secretKey = Keys.hmacShaKeyFor(secretKeyBytes);
 
         Instant now = Instant.now();
 
+        // 4. 토큰 생성
         String token = Jwts.builder()
                 .subject(userDetails.getUserId())
                 .expiration(Date.from(now.plusMillis(Long.parseLong(environment.getProperty("token.expiration-time")))))
                 .issuedAt(Date.from(now))
-                .signWith(secretKey)
+                .signWith(secretKey) // 생성된 SecretKey 객체로 서명
                 .compact();
 
         res.addHeader("token", token);

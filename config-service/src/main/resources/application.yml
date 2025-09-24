@@ -15,13 +15,12 @@ spring:
     config:
       server:
         native:
-          search-locations: file://${user.home}/Desktop/Work/native-file-repo
         git: #default
-          uri: https://github.com/joneconsulting/spring-cloud-config
+          uri: file://C:\Users\shbang\Desktop\Work\git-local-repo
+#          uri: https://github.com/joneconsulting/spring-cloud-config
           default-label: master
-#          username: [username]
-#          password: [password]
-
+#          ussername:
+#          password:
 management:
   endpoints:
     web:
