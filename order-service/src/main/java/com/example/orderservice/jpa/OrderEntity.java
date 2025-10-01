@@ -1,6 +1,6 @@
 package com.example.orderservice.jpa;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
