@@ -63,4 +63,7 @@ management:
           - beans
           - info
           - busrefresh
+          - info
+          - metrics
+          - prometheus
 
